@@ -1,0 +1,20 @@
+# Normal daily mode. Settings are read from Portainer's "Environment variables"
+# (or a local .env file), so nothing secret lives in git.
+services:
+  dst-daily:
+    build: .
+    image: dst-daily:latest
+    container_name: dst-daily
+    restart: unless-stopped
+    shm_size: "1gb"          # Steam's embedded browser crashes with the default 64MB
+    environment:
+      - TZ=${TZ:-UTC}
+      - RUN_AT=${RUN_AT:-09:00}
+      - RUN_ON_START=${RUN_ON_START:-false}
+      - POPUP_WAIT=${POPUP_WAIT:-60}
+    volumes:
+      - steam-home:/home/steam
+
+volumes:
+  steam-home:
+    name: dst-steam-home     # fixed name so the login/game files are shared with the login stack

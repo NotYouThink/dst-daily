@@ -1,0 +1,21 @@
+# One-time setup: starts Steam with a VNC server so you can log in and install
+# Don't Starve Together. Uses the same volume as docker-compose.yml.
+# Stop/remove the daily stack first (same container name).
+services:
+  dst-daily:
+    build: .
+    image: dst-daily:latest
+    container_name: dst-daily
+    command: ["login"]
+    shm_size: "1gb"
+    environment:
+      - TZ=${TZ:-UTC}
+      - VNC_PASSWORD=${VNC_PASSWORD:?set VNC_PASSWORD}
+    ports:
+      - "5900:5900"          # remove this stack once setup is done
+    volumes:
+      - steam-home:/home/steam
+
+volumes:
+  steam-home:
+    name: dst-steam-home

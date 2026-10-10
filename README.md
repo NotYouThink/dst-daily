@@ -11,15 +11,14 @@ Once a day a Docker container starts Steam on a hidden virtual screen, launches 
 
 1. [How it works](#how-it-works)
 2. [What you need](#what-you-need)
-3. [Step 1: Get the files into your own repository](#step-1-get-the-files-into-your-own-repository)
-4. [Step 2: One-time Steam login](#step-2-one-time-steam-login)
-5. [Step 3: Switch to daily mode](#step-3-switch-to-daily-mode)
-6. [Step 4: Test it](#step-4-test-it)
-7. [Settings](#settings)
-8. [Updating](#updating)
-9. [Troubleshooting](#troubleshooting)
-10. [Warnings](#warnings)
-11. [Uninstall](#uninstall)
+3. [Step 1: One-time Steam login](#step-1-one-time-steam-login)
+4. [Step 2: Switch to daily mode](#step-2-switch-to-daily-mode)
+5. [Step 3: Test it](#step-3-test-it)
+6. [Settings](#settings)
+7. [Updating](#updating)
+8. [Troubleshooting](#troubleshooting)
+9. [Warnings](#warnings)
+10. [Uninstall](#uninstall)
 
 ---
 

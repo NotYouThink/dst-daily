@@ -7,6 +7,9 @@ services:
     image: dst-daily:latest
     container_name: dst-daily
     command: ["login"]
+    security_opt:            # Steam's sandbox needs user namespaces, which Docker blocks by default
+      - seccomp=unconfined
+      - apparmor=unconfined
     shm_size: "1gb"
     environment:
       - TZ=${TZ:-UTC}

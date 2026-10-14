@@ -1,5 +1,5 @@
 #!/bin/bash
-# Modes:  cron (default, runs daily at $RUN_AT) | daily (run once) | login (VNC for first-time setup)
+# Modes:  cron (default, runs at the time(s) in $RUN_AT) | daily (run once) | login (VNC for first-time setup)
 export DISPLAY=:99
 
 start_display() {
@@ -38,11 +38,21 @@ case "${1:-cron}" in
     run_daily
     ;;
   cron)
+    # RUN_AT can hold several times, comma-separated: RUN_AT=09:00,21:00
+    for t in ${RUN_AT//,/ }; do
+      if ! [[ "$t" =~ ^([01][0-9]|2[0-3]):[0-5][0-9]$ ]]; then
+        echo "Invalid time in RUN_AT: '$t' (use HH:MM, e.g. 09:00 or 09:00,21:00)"; exit 1
+      fi
+    done
     [ "$RUN_ON_START" = "true" ] && run_daily
     while true; do
       now=$(date +%s)
-      next=$(date -d "today $RUN_AT" +%s)
-      [ "$next" -le "$now" ] && next=$(date -d "tomorrow $RUN_AT" +%s)
+      next=""
+      for t in ${RUN_AT//,/ }; do
+        ts=$(date -d "today $t" +%s)
+        [ "$ts" -le "$now" ] && ts=$(date -d "tomorrow $t" +%s)
+        if [ -z "$next" ] || [ "$ts" -lt "$next" ]; then next=$ts; fi
+      done
       echo "[$(date)] Next run at $(date -d @$next)"
       sleep $((next - now))
       run_daily
